@@ -147,8 +147,8 @@ public class Operations {
                     break;
             }
 
-            if (x.equals(suspectValue.subtract(BigInteger.ONE)))
-                continue;
+            //if (x.equals(suspectValue.subtract(BigInteger.ONE)))
+                //continue;
 
             return false;
         }
