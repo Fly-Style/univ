@@ -1,3 +1,5 @@
+package com.kek;
+
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -84,84 +86,69 @@ public class Operations {
     }
 
     public boolean MillersTest(BigInteger suspectValue) {
-        int bitsNumber = 512;
-        BigInteger Number = new BigInteger("2");
-        Number.pow(bitsNumber);
-
-        BigInteger current;
-        Random random = new Random(System.currentTimeMillis());
-        do {
-            current = new BigInteger(Number.bitLength(), random);
-        }
-        while (current.compareTo(Number) >= 0);
-
-        if (suspectValue.equals(BigInteger.ONE.add(BigInteger.ONE)) || suspectValue.equals(BigInteger.ONE.add(BigInteger.ONE.add(BigInteger.ONE))))
+        if (suspectValue.equals(BigInteger.ONE.add(BigInteger.ONE)) ||
+                suspectValue.equals(BigInteger.ONE.add(BigInteger.ONE.add(BigInteger.ONE))))
             return true;
-        if (suspectValue.mod(BigInteger.ONE.add(BigInteger.ONE)).equals(BigInteger.ZERO)) {
-            suspectValue.add(BigInteger.ONE);
-            System.out.println("Парное, добавим единичку");
-        }
+
+        if (suspectValue.mod(BigInteger.ONE.add(BigInteger.ONE)).equals(BigInteger.ZERO))
+            return false;
+
 
         long counter = 0;
-        System.out.println(suspectValue);
         BigInteger temp = suspectValue.subtract(BigInteger.ONE);
-        BigInteger x =  BigInteger.ZERO;
+
+        BigInteger x = BigInteger.ZERO;
 
         BigInteger two = BigInteger.ONE.add(BigInteger.ONE);
         BigInteger r1 = two;
         BigInteger r2 = temp.subtract(BigInteger.ONE);
-        System.out.println(temp);
-        BigInteger tmp;
 
         int rounds = 10;
-
-
         while(!temp.equals(BigInteger.ZERO) && temp.mod(two).equals(BigInteger.ZERO))
         {
             counter++;
-            temp.divide(two);
+            temp = temp.divide(two);
         }
 
-        for(int i = 0; i < rounds; i++) {
-            //System.out.println("round " + i);
-            BigInteger randNext;
-            BigInteger rand = r2.subtract(r1);
-            //System.out.println(rand);
-            do {
-                randNext = new BigInteger(rand.bitLength(), random);
-            }
-            while (randNext.compareTo(Number) >= 0);
-            tmp = r1.add(randNext);
 
-            x = FastBinaryPow(tmp, temp, suspectValue);
+        for(int i = 0; i < rounds; i++) {
+
+            Random random = new Random(System.currentTimeMillis());
+            BigInteger randNext = new BigInteger(512, random);
+            randNext = randNext.mod(r2.subtract(r1));
+
+
+            BigInteger tmp = r1.add(randNext);
+
+            x = tmp.modPow(temp, suspectValue);
+
             if(x.equals(BigInteger.ONE) || x.equals(suspectValue.subtract(BigInteger.ONE)))
                 continue;
 
             for(long j = 0; j < counter-1; j++)
             {
-                x = FastBinaryPow(x, two, suspectValue);
+                x = x.modPow(two, suspectValue);
 
                 if(x.equals(BigInteger.ONE))
                     return false;
-                if(x.equals(BigInteger.ZERO.subtract(BigInteger.ONE)))
+                if(x.equals(suspectValue.subtract(BigInteger.ONE)))
                     break;
             }
 
-            //if (x.equals(suspectValue.subtract(BigInteger.ONE)))
-                //continue;
+            if (x.equals(suspectValue.subtract(BigInteger.ONE)))
+                continue;
 
             return false;
         }
         return true;
-    } // problems;
-
+    }
     public BigInteger CaratsubaMultiply()
     {
-
+        return null;
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Operations.class.getClassLoader().loadClass("com.kek.Operations");
         Random rand = new Random(System.currentTimeMillis());
         int randomBitsValue = rand.nextInt(512);
         BigInteger someValue = new BigInteger(randomBitsValue, rand);
@@ -172,8 +159,8 @@ public class Operations {
         boolean isSimpleFerma = operations.FermasTest(someValue);
         System.out.println("Ferma says : " + isSimpleFerma);
 
-        //boolean isSimpleMiller = operations.MillersTest(someValue);
-        //System.out.println("Miller says : " + isSimpleMiller);
+        boolean isSimpleMiller = operations.MillersTest(someValue);
+        System.out.println("Miller says : " + isSimpleMiller);
 
 
 

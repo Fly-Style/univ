@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cryptology.L1..iml" filepath="$PROJECT_DIR$/Cryptology.L1..iml" />
+      <module fileurl="file://$PROJECT_DIR$/kek/kek.iml" filepath="$PROJECT_DIR$/kek/kek.iml" />
     </modules>
   </component>
 </project>
