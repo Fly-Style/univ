@@ -29,13 +29,19 @@
       <file leaf-file-name="Operations.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/kek/src/Operations.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7154047" vertical-offset="1052" max-vertical-offset="2040">
-              <caret line="78" column="95" selection-start-line="78" selection-start-column="95" selection-end-line="78" selection-end-column="95" />
+            <state vertical-scroll-proportion="0.45982906" vertical-offset="88" max-vertical-offset="1241">
+              <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#GCD#0;class#Operations#0" expanded="false" />
+                <element signature="method#WiderEuclidGCD#0;class#Operations#0" expanded="false" />
+                <element signature="method#LogBigInteger#0;class#Operations#0" expanded="false" />
+                <element signature="method#FastMultiply#0;class#Operations#0" expanded="false" />
+                <element signature="method#FastBinaryPow#0;class#Operations#0" expanded="false" />
+                <element signature="method#FermasTest#0;class#Operations#0" expanded="false" />
                 <element signature="method#MillersTest#0;class#Operations#0" expanded="false" />
-                <element signature="e#4599#4600#0" expanded="true" />
-                <element signature="e#4623#4624#0" expanded="true" />
+                <element signature="method#CaratsubaMultiply#0;class#Operations#0" expanded="false" />
+                <element signature="method#MontgomeryMultiplie#0;class#Operations#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -92,10 +98,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane />
-      </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -110,12 +112,30 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="kek" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Cryptology.L1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kek" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane />
+      </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -441,16 +461,17 @@
       <workItem from="1442312962208" duration="183000" />
       <workItem from="1442313181286" duration="10000" />
       <workItem from="1442313286189" duration="116000" />
-      <workItem from="1442313526910" duration="651000" />
+      <workItem from="1442313526910" duration="1191000" />
+      <workItem from="1442757901484" duration="9657000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4759000" />
+    <option name="totallyTimeSpent" value="14956000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -463,10 +484,10 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32952693" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952693" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15279879" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15279879" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -508,6 +529,25 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/kek/src/Operations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2040">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#GCD#0;class#Operations#0" expanded="false" />
+            <element signature="method#WiderEuclidGCD#0;class#Operations#0" expanded="false" />
+            <element signature="method#LogBigInteger#0;class#Operations#0" expanded="false" />
+            <element signature="method#FastMultiply#0;class#Operations#0" expanded="false" />
+            <element signature="method#FastBinaryPow#0;class#Operations#0" expanded="false" />
+            <element signature="method#FermasTest#0;class#Operations#0" expanded="false" />
+            <element signature="method#MillersTest#0;class#Operations#0" expanded="false" />
+            <element signature="method#CaratsubaMultiply#0;class#Operations#0" expanded="false" />
+            <element signature="method#MontgomeryMultiplie#0;class#Operations#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_45/src.zip!/java/lang/ClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8817204" vertical-offset="5741" max-vertical-offset="36295">
@@ -524,13 +564,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/kek/src/Operations.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7154047" vertical-offset="1052" max-vertical-offset="2040">
-          <caret line="78" column="95" selection-start-line="78" selection-start-column="95" selection-end-line="78" selection-end-column="95" />
+        <state vertical-scroll-proportion="0.45982906" vertical-offset="88" max-vertical-offset="1241">
+          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#GCD#0;class#Operations#0" expanded="false" />
+            <element signature="method#WiderEuclidGCD#0;class#Operations#0" expanded="false" />
+            <element signature="method#LogBigInteger#0;class#Operations#0" expanded="false" />
+            <element signature="method#FastMultiply#0;class#Operations#0" expanded="false" />
+            <element signature="method#FastBinaryPow#0;class#Operations#0" expanded="false" />
+            <element signature="method#FermasTest#0;class#Operations#0" expanded="false" />
             <element signature="method#MillersTest#0;class#Operations#0" expanded="false" />
-            <element signature="e#4599#4600#0" expanded="true" />
-            <element signature="e#4623#4624#0" expanded="true" />
+            <element signature="method#CaratsubaMultiply#0;class#Operations#0" expanded="false" />
+            <element signature="method#MontgomeryMultiplie#0;class#Operations#0" expanded="false" />
           </folding>
         </state>
       </provider>

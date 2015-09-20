@@ -22,6 +22,21 @@ public class Operations {
         return GCD(divider, divided.mod(divider));
     }
 
+    public BigInteger WiderEuclidGCD (BigInteger A, BigInteger B, BigInteger X, BigInteger Y)
+    {
+        if (A.equals(BigInteger.ZERO))
+        {
+            X = BigInteger.ZERO;
+            Y = BigInteger.ONE;
+            return B;
+        }
+        BigInteger x1 = BigInteger.ZERO, y1 = BigInteger.ZERO;
+        BigInteger res =  WiderEuclidGCD (B.mod(A), A, x1, y1);
+        X = y1.subtract(B.divide(A)).multiply(x1);
+        Y = x1;
+        return res;
+    }
+
     private static double LogBigInteger(BigInteger val)
     {
         int blex = val.bitLength() - 256;// - 1022; // any value in 60..1023 is ok
@@ -54,6 +69,7 @@ public class Operations {
         }
         return (FastMultiply(FastBinaryPow(A, B.subtract(BigInteger.ONE), module), A, module)).mod(module);
     }
+
 
     public boolean FermasTest(BigInteger suspectValue) {
         int bitsNumber = 512;
@@ -142,16 +158,76 @@ public class Operations {
         return true;
     }
 
-    public BigInteger CaratsubaMultiply()
-    {
-        for(;;){}
+    public BigInteger CaratsubaMultiply(BigInteger x, BigInteger y)   {
+        int N = Math.max(x.bitLength(), y.bitLength());
+        if (N <= 256) return x.multiply(y);
+
+        N = (N / 2) + (N % 2);
+
+        BigInteger b = x.shiftRight(N);
+        BigInteger a = x.subtract(b.shiftLeft(N));
+        BigInteger d = y.shiftRight(N);
+        BigInteger c = y.subtract(d.shiftLeft(N));
+
+        BigInteger ac = CaratsubaMultiply(a, c);
+        BigInteger bd = CaratsubaMultiply(b, d);
+        BigInteger abcd = CaratsubaMultiply(a.add(b), c.add(d));
+
+        return ac.add(abcd.subtract(ac).subtract(bd).shiftLeft(N)).add(bd.shiftLeft(2*N));
     }
+
+    public BigInteger MontgomeryMultiplie (BigInteger x,  BigInteger y, BigInteger module) {
+
+        // N ~ 2^counter;
+
+        int counter = 0;
+        BigInteger temp = BigInteger.ONE;
+        while(temp.compareTo(module) < 0)
+        {
+            counter++;
+            temp = temp.multiply(two);
+            if (temp.compareTo(module) > 0)
+                temp.divide(two);
+        }
+
+//        1) Вычисление числа R, которое является ближайшей сверху к N степенью двойки.
+//        2) Перевод сомножителей в арифметику Монтгомери (в остаточные классы по
+//                другому) A`=A*R mod N; B`=B*R mod N.
+//        3) Вычисление мультипликативно-аддитивно-обратного к N относительно R
+//          (N1=GCD(N,R) — это будет мультипликативно-обратное; N`=R-N1 — это аддитивно-обратное)
+//        4) Вычисление мультипликативно-обратного к R относительно N (R`=GCD(R,N))
+
+
+        BigInteger X = FastMultiply(x, temp, module);
+        BigInteger Y = FastMultiply(y, temp, module);
+
+        BigInteger reverseModule = module.mod(temp);        // multiplicative reverse by MODULE;
+        BigInteger reverseAdditive = temp.subtract(module); // additive reverse;
+        BigInteger reverseTemp = temp.mod(module);          // multiplicative reverse by TEMP;
+
+//      5) T=A`*B`
+//      6) M=T*N` mod R (т.к. R — степень 2 — это не деление)
+//      7) T=T+M*N
+//      8) T=T/R
+//
+//      9) Result=T*R` mod N
+
+        BigInteger tmp = X.multiply(Y);
+        BigInteger mtp = FastMultiply(tmp, reverseAdditive, temp);
+        tmp = tmp.add(mtp.multiply(module));
+        tmp = tmp.divide(temp);
+
+        BigInteger res = FastMultiply(tmp, reverseTemp, module);
+        return res;
+    }
+
 
     public static void main(String[] args)
     {
         Random rand = new Random(System.currentTimeMillis());
         int randomBitsValue = rand.nextInt(512);
         BigInteger someValue = new BigInteger(randomBitsValue, rand);
+        BigInteger karatsubaMultiplier = new BigInteger(128, rand);
         String stringValue = someValue.toString();
         System.out.println(stringValue);
 
@@ -161,6 +237,9 @@ public class Operations {
 
         boolean isSimpleMiller = operations.MillersTest(someValue);
         System.out.println("Miller says : " + isSimpleMiller);
+
+        BigInteger karatsubaResult = operations.CaratsubaMultiply(someValue, karatsubaMultiplier);
+        System.out.println("Miller multiplie : " + someValue + " * " + karatsubaMultiplier + karatsubaResult);
 
 
 
