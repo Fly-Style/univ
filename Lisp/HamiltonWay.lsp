@@ -70,33 +70,39 @@
 
 (bust (car vertexlist) (cdr vertexlist) edgelist)) ;перебор вершин и поиск пути от первой вершины ко всем остальным
 
+; a[b] = 0;
+
+(defun func(vert lst i)
+(cond 
+((null lst) nil)
+(if (and (eql (car lst) 0) (eql vert i) ) (T)
+(func vert (cdr lst) (+0 i)) 
+)
+)
+)
+
 ;hamilton cycle (vertexlist, edgelist);
 
-(defun hamiltoncycle (vertexlist edgelist chosenvertex)
+(defun hamiltoncycle (vertexlist edgelist vertexquantity vertexcount chosenvertex visited nextvertex)
 
-(setq path (list chosenvertex) 	; added to a all neighbours [a.push_back(vertexlist[chosenvertex])].
+cond (	(if ( eql (vertexquantity vertexcount) 
+			(func chosenvertex nextvertex 0) (return nil)
+			)
+		)	
+		
+	(setq counter ( 0 ) ) 
 
-(setq next (nth chosenvertex))
-
-(setq pathlist (list (aref vertexlist chosenvertex)))
-
+	(loop for counter from 1 to vertexquantity)         ; проверка-истинна-ложь
+		(if (and not (member (counter visited)) (member ((chosenvertex counter) edgelist))) ; edgelist[counter] - ? mb digits;
+			(func chosenvertex nextvertex counter)
+			(push counter(cdr visited))
+			
+			(if (hamilton (vertexlist edgelist vertexquantity (+ vertexcount 1) ) t)
+				pop counter visited )                   
+	(setq счетчик (1+ счетчик))))          ; инкремент, увеличение
+	)
 
 )
-
-(let ((x (car path)) (ypos))
-(loop 
-(if (eql path nil) (return))
-	(setq vydranyj (remove pathlist (position y pathlist)))
-
-(if (not (member vydranyj path)))
-	(push vydranyj (cdr path))
-
-	(unless (member vydranyj pathlist) )
-	pop x path)
-)
-	
-)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -105,59 +111,31 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun NEIGHBOUR3 (lambda (x graph)
-(cond 
-( (null (assoc x graph)) nil )
-( t (cdr (assoc x graph)) )
-)
-))
-
-(defun hc (lambda (graph start visited sons)
-; START - первая вершина графа ;
-; VISITED - список пройденных вершин ;
-; SONS - соседи просматриваемой вершины ;
-
-(cond 
-( (null sons) nil )
-( T 
-(cond ( (and (member start sons)
-(eq (length graph) (length visited))
-)
-(reverse visited)
-)
-( t (cond 
-(( member (car sons) visited)
-(hc graph start visited (cdr sons)) )
-( t (or (hc graph start
-(cons
-(car sons) visited)
-(NEIGHBOUR3 (car sons) graph)
-)
-(hc graph start visited (cdr sons))) 
-)) )
-)
-)
-)
-))
-
-(defun hamilton (lambda (GRAPH)
-; GRAPH - граф в виде структуры смежности ;
-; Результат: гамильтонов цикл в виде списка вершин, ;
-; NIL - если гамильтонова цикла не существует ;
-(cond 
-( (null graph) nil )
-( t 
-(cond 
-( (null (cdr graph))
-(list (caar graph)))
-( t (hc graph (caar graph)
-(list (caar graph)) (cdar graph)))))
-)
-))
 
 ( print (linkedgraph '(v1 v2 v3 v4) '((v1 v2) (v2 v3) (v3 v4) ) ) )
  
-(print (hamilton '((1 . (2 6)) (2 . (1 3 4)) (3 . (2 4)) (4 . (2 3 5)) (5 . (4 6)) (6 . (1 5))))
-				  (1 2 3 4 5 6)
-)
+
 ;( print (hamiltoncycle `(v1 v2 v3 v4) `((v1 v2) (v2 v3) (v3 v4) (v1 v4)) `(v1) )
+
+;
+;(setq path (list chosenvertex) 	; added to a all neighbours [a.push_back(vertexlist[chosenvertex])].
+
+;(setq next (nth chosenvertex))
+
+;(setq pathlist (list (aref vertexlist chosenvertex)))
+
+
+;)
+
+;(let ((x (car path)) (ypos))
+;(loop 
+;(if (eql path nil) (return))
+;	(setq vydranyj (remove pathlist (position y pathlist)))
+
+;(if (not (member vydranyj path)))
+;	(push vydranyj (cdr path))
+
+;	(unless (member vydranyj pathlist) )
+;	pop x path); )
+	
+;)

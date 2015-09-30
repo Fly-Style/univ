@@ -15,6 +15,7 @@ public class Operations {
     private Integer one = new Integer(1);
     private BigInteger two = BigInteger.ONE.add(BigInteger.ONE);
 
+
     private BigInteger GCD(BigInteger divided, BigInteger divider)       //greatest common divisor
     {
         if (divided.equals(BigInteger.ZERO))
@@ -88,12 +89,13 @@ public class Operations {
             }
             while (current.compareTo(Number) >= 0);
 
+            current = current.mod(suspectValue.subtract(BigInteger.ONE.add(BigInteger.ONE)).add(two));
 
             if (!suspectValue.gcd(current).equals(BigInteger.ONE))
                 return false;
 
             if (!current.modPow(suspectValue.subtract(BigInteger.ONE), suspectValue).equals(1))
-                return false;
+            return false;
         }
 
         return true;
@@ -105,9 +107,10 @@ public class Operations {
                 suspectValue.equals(BigInteger.ONE.add(BigInteger.ONE.add(BigInteger.ONE))))
             return true;
 
-        if (suspectValue.mod(BigInteger.ONE.add(BigInteger.ONE)).equals(BigInteger.ZERO))
-            return false;
-
+        if (suspectValue.mod(BigInteger.ONE.add(BigInteger.ONE)).equals(BigInteger.ZERO)) {
+            suspectValue.add(BigInteger.ONE);
+            System.out.println("Парное, добавим единичку");
+        }
 
         long counter = 0;
         BigInteger temp = suspectValue.subtract(BigInteger.ONE);
@@ -160,7 +163,7 @@ public class Operations {
 
     public BigInteger CaratsubaMultiply(BigInteger x, BigInteger y)   {
         int N = Math.max(x.bitLength(), y.bitLength());
-        if (N <= 256) return x.multiply(y);
+        if (N <= 64) return x.multiply(y);
 
         N = (N / 2) + (N % 2);
 
@@ -225,9 +228,9 @@ public class Operations {
     public static void main(String[] args)
     {
         Random rand = new Random(System.currentTimeMillis());
-        int randomBitsValue = rand.nextInt(512);
+        int randomBitsValue = 512; // rand.nextInt(768);
         BigInteger someValue = new BigInteger(randomBitsValue, rand);
-        BigInteger karatsubaMultiplier = new BigInteger(128, rand);
+        BigInteger multiplier = new BigInteger(256, rand);
         String stringValue = someValue.toString();
         System.out.println(stringValue);
 
@@ -238,9 +241,14 @@ public class Operations {
         boolean isSimpleMiller = operations.MillersTest(someValue);
         System.out.println("Miller says : " + isSimpleMiller);
 
-        BigInteger karatsubaResult = operations.CaratsubaMultiply(someValue, karatsubaMultiplier);
-        System.out.println("Miller multiplie : " + someValue + " * " + karatsubaMultiplier + karatsubaResult);
+        BigInteger karatsubaResult = operations.CaratsubaMultiply(someValue, multiplier);
+        System.out.println("Karatsuba multiplie : " + someValue + " * " + multiplier + " = " + karatsubaResult);
 
+//        BigInteger montgometryResult = operations.MontgomeryMultiplie(someValue, multiplier, someValue);
+//        System.out.println("Montgometry multiplie : " + someValue + " * " + multiplier + " = " + montgometryResult);
+
+        BigInteger euler = operations.WiderEuclidGCD (someValue, multiplier, BigInteger.ZERO, BigInteger.ZERO);
+        System.out.println("EulerGCD ( " + someValue + " , " + multiplier + ") = " + euler);
 
 
     }
