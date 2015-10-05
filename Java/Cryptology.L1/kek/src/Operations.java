@@ -52,9 +52,11 @@ public class Operations {
         if (B.equals(one))
             return A;
 
-        if (B.mod(two).equals(zero)) {
+        BigInteger tempmod = B.mod(two);
+        System.out.println(tempmod);
+        if (tempmod.equals(zero)) {
             BigInteger temp = this.FastMultiply(A, B.divide(two), module);
-            return (temp.multiply(two).mod(module));
+            return (this.FastMultiply(temp, two, module));
         }
         return (FastMultiply(A, B.subtract(BigInteger.ONE), module).add(A)).mod(module);
     }
@@ -183,6 +185,8 @@ public class Operations {
 
         // N ~ 2^counter;
 
+//      1) Вычисление числа R, которое является ближайшей сверху к N степенью двойки.
+
         int counter = 0;
         BigInteger temp = BigInteger.ONE;
         while(temp.compareTo(module) < 0)
@@ -190,37 +194,42 @@ public class Operations {
             counter++;
             temp = temp.multiply(two);
             if (temp.compareTo(module) > 0)
-                temp.divide(two);
+                break;
         }
+        temp.divide(two);
 
-//        1) Вычисление числа R, которое является ближайшей сверху к N степенью двойки.
+
 //        2) Перевод сомножителей в арифметику Монтгомери (в остаточные классы по
 //                другому) A`=A*R mod N; B`=B*R mod N.
 //        3) Вычисление мультипликативно-аддитивно-обратного к N относительно R
 //          (N1=GCD(N,R) — это будет мультипликативно-обратное; N`=R-N1 — это аддитивно-обратное)
 //        4) Вычисление мультипликативно-обратного к R относительно N (R`=GCD(R,N))
 
+        /* 2 */
+        BigInteger X = this.CaratsubaMultiply(x, temp).mod(module);
+        BigInteger Y = this.CaratsubaMultiply(y, temp).mod(module);
 
-        BigInteger X = FastMultiply(x, temp, module);
-        BigInteger Y = FastMultiply(y, temp, module);
 
-        BigInteger reverseModule = module.mod(temp);        // multiplicative reverse by MODULE;
-        BigInteger reverseAdditive = temp.subtract(module); // additive reverse;
-        BigInteger reverseTemp = temp.mod(module);          // multiplicative reverse by TEMP;
+        /* 3 & 4 */
+        BigInteger reverseModule = this.WiderEuclidGCD(module, temp, BigInteger.ZERO, BigInteger.ZERO);        // multiplicative reverse by MODULE;
+        BigInteger reverseAdditive = temp.subtract(reverseModule); // additive reverse;
+        BigInteger reverseTemp = this.WiderEuclidGCD(temp, module, BigInteger.ZERO, BigInteger.ZERO);          // multiplicative reverse by TEMP;
 
 //      5) T=A`*B`
 //      6) M=T*N` mod R (т.к. R — степень 2 — это не деление)
 //      7) T=T+M*N
 //      8) T=T/R
 //
-//      9) Result=T*R` mod N
+//      9) Result = T*R` mod N
 
-        BigInteger tmp = X.multiply(Y);
-        BigInteger mtp = FastMultiply(tmp, reverseAdditive, temp);
-        tmp = tmp.add(mtp.multiply(module));
+        BigInteger tmp = CaratsubaMultiply(X, Y);
+        BigInteger mtp = this.CaratsubaMultiply(tmp, reverseAdditive).mod(temp);
+        mtp = this.CaratsubaMultiply(mtp, module);
+        tmp = tmp.add(mtp);
         tmp = tmp.divide(temp);
 
-        BigInteger res = FastMultiply(tmp, reverseTemp, module);
+
+        BigInteger res = CaratsubaMultiply(tmp, reverseTemp).mod(module);
         return res;
     }
 
@@ -235,6 +244,7 @@ public class Operations {
         System.out.println(stringValue);
 
         Operations operations = new Operations();
+
         boolean isSimpleFerma = operations.FermasTest(someValue);
         System.out.println("Ferma says : " + isSimpleFerma);
 
@@ -244,8 +254,8 @@ public class Operations {
         BigInteger karatsubaResult = operations.CaratsubaMultiply(someValue, multiplier);
         System.out.println("Karatsuba multiplie : " + someValue + " * " + multiplier + " = " + karatsubaResult);
 
-//        BigInteger montgometryResult = operations.MontgomeryMultiplie(someValue, multiplier, someValue);
-//        System.out.println("Montgometry multiplie : " + someValue + " * " + multiplier + " = " + montgometryResult);
+        BigInteger montgometryResult = operations.MontgomeryMultiplie(someValue, multiplier, karatsubaResult);
+        System.out.println("Montgometry multiplie mod karatsubaResult : " + someValue + " * " + multiplier + " = " + montgometryResult);
 
         BigInteger euler = operations.WiderEuclidGCD (someValue, multiplier, BigInteger.ZERO, BigInteger.ZERO);
         System.out.println("EulerGCD ( " + someValue + " , " + multiplier + ") = " + euler);

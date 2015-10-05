@@ -72,37 +72,35 @@
 
 ; a[b] = 0;
 
-(defun func(vert lst i)
-(cond 
-((null lst) nil)
-(if (and (eql (car lst) 0) (eql vert i) ) (T)
-(func vert (cdr lst) (+0 i)) 
-)
-)
-)
+
+
+
+
+
 
 ;hamilton cycle (vertexlist, edgelist);
 
 (defun hamiltoncycle (vertexlist edgelist vertexquantity vertexcount chosenvertex visited nextvertex)
-
-cond (	(if ( eql (vertexquantity vertexcount) 
-			(func chosenvertex nextvertex 0) (return nil)
-			)
-		)	
+	(if ( eql (vertexquantity vertexcount) )
+			(setf (nth chosenvertex nextvertex 0) (return nil)
+		)
+	)	
 		
-	(setq counter ( 0 ) ) 
+			(setq counter ( 0 ) ) 
 
-	(loop for counter from 1 to vertexquantity)         ; проверка-истинна-ложь
-		(if (and not (member (counter visited)) (member ((chosenvertex counter) edgelist))) ; edgelist[counter] - ? mb digits;
-			(func chosenvertex nextvertex counter)
-			(push counter(cdr visited))
+		(loop for counter from 0 to (- vertexquantity 1)
+			(if (and not (member (counter visited)) (member ((chosenvertex counter) edgelist))) ; edgelist[counter] - ? mb digits;
+				(setf (nth chosenvertex nextvertex) counter)
+				(push counter visited)
 			
-			(if (hamilton (vertexlist edgelist vertexquantity (+ vertexcount 1) ) t)
-				pop counter visited )                   
-	(setq счетчик (1+ счетчик))))          ; инкремент, увеличение
-	)
-
+				(if (hamiltoncycle (vertexlist edgelist vertexquantity (+ vertexcount 1) ) t)
+					pop counter visited )
+			)                   
+		)
+		(return nil)
 )
+
+( print ( hamiltoncycle '(1 2 3) '((1 2) (2 3) (1 3)) 3 1 1 nil 0) )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
