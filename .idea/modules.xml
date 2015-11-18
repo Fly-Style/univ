@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Java/Cryptology.L1/Cryptology.L1.iml" filepath="$PROJECT_DIR$/Java/Cryptology.L1/Cryptology.L1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/Cryptology.L2. Rjindael/Cryptology.L2. Rjindael.iml" filepath="$PROJECT_DIR$/Java/Cryptology.L2. Rjindael/Cryptology.L2. Rjindael.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/Cryptology.L1/kek/kek.iml" filepath="$PROJECT_DIR$/Java/Cryptology.L1/kek/kek.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/OOP.S5T5.MailClient/src/main/main.iml" filepath="$PROJECT_DIR$/Java/OOP.S5T5.MailClient/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java/univ.iml" filepath="$PROJECT_DIR$/Java/univ.iml" />
+    </modules>
+  </component>
+</project>
