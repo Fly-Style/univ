@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:cmn="http://www.jpilgrim.com/CommonTypes" elementFormDefault="qualified" targetNamespace="http://www.jpilgrim.com/Device" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import schemaLocation="CommonTypes.xsd" namespace="http://www.jpilgrim.com/CommonTypes" />
+
+    <xs:element name="device">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="computer" minOccurs="1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="cmn:Name_" minOccurs="1" maxOccurs="1"></xs:element>
+                            <xs:element ref="cmn:Origin" minOccurs="1" maxOccurs="1"> </xs:element>
+                            <xs:element ref="cmn:Price" minOccurs="1" maxOccurs="1"></xs:element>
+                            <xs:element name="tipe" type="cmn:Type" minOccurs="1" maxOccurs="1"></xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="serial" use="required" type="xs:ID"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" xmlns:t="http://www.jpilgrim.com/CommonTypes" targetNamespace="http://www.jpilgrim.com/CommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="type" type="xs:string" />
+
+    <xs:element name = "Name_">
+        <xs:simpleType >
+            <xs:restriction base="xs:string">
+               <xs:pattern value="[a-zA-Z]+"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <!-- -->
+
+    <xs:element name="Price">
+        <xs:simpleType>
+        <xs:restriction base="xs:short">
+            <xs:minInclusive value="0">
+            </xs:minInclusive>
+            <xs:maxInclusive value="32750">
+            </xs:maxInclusive>
+        </xs:restriction>
+    </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="Origin">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="[a-zA-Z]+"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:complexType name="Type">
+        <xs:sequence>
+
+            <xs:element name="Port" minOccurs="1" maxOccurs="unbounded">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="Devices" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Keyboard">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="Mouse">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+
+                        <xs:element name="Headphones">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="Energy">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="IsCooler">
+                <xs:simpleType>
+                    <xs:restriction base="xs:boolean">
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="Crit">
+                <xs:simpleType>
+                    <xs:restriction base="xs:boolean">
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- -->
+
+</xs:schema>

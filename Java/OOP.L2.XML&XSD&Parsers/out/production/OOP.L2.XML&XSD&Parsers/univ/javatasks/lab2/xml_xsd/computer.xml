@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<device  xmlns="http://www.jpilgrim.com/Device" xmlns:cmn="http://www.jpilgrim.com/CommonTypes" >
+    <computer serial="A">
+        <cmn:Name_>Asus</cmn:Name_>
+        <cmn:Origin>USA</cmn:Origin>
+        <cmn:Price>750</cmn:Price>
+
+        <tipe>
+            <cmn:Port>COM</cmn:Port>
+            <cmn:Devices>
+                <cmn:Keyboard>Kingston</cmn:Keyboard>
+                <cmn:Mouse>SteelSeries</cmn:Mouse>
+                <cmn:Headphones>Beats</cmn:Headphones>
+            </cmn:Devices>
+            <cmn:Energy>380</cmn:Energy>
+            <cmn:IsCooler>false</cmn:IsCooler>
+            <cmn:Crit>true</cmn:Crit>
+        </tipe>
+    </computer>
+
+    <computer serial="B">
+        <cmn:Name_>SupaPupa</cmn:Name_>
+        <cmn:Origin>Ukraine</cmn:Origin>
+        <cmn:Price>100</cmn:Price>
+        <tipe>
+            <cmn:Port>USB</cmn:Port>
+            <cmn:Devices>
+                <cmn:Keyboard>Kingston</cmn:Keyboard>
+                <cmn:Mouse>SteelSeries</cmn:Mouse>
+                <cmn:Headphones>Beats</cmn:Headphones>
+            </cmn:Devices>
+            <cmn:Energy>220</cmn:Energy>
+            <cmn:IsCooler>true</cmn:IsCooler>
+            <cmn:Crit>false</cmn:Crit>
+        </tipe>
+
+    </computer>
+
+</device>
+
+
