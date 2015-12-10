@@ -114,7 +114,6 @@ public class Rijndael
         return res;
     }
 
-
     private int [] KeyDeploy () {
 
         try {
@@ -179,6 +178,10 @@ public class Rijndael
         return res[k];
     }
 
+    private int[][] SubBytes (int [][] mtrx) {
+
+    }
+
 
 
     public byte[] Encrypt (String toEncrypt) {
@@ -205,8 +208,7 @@ public class Rijndael
     }
 
     public static void main(String[] args) {
-        String someText = "I take it deeper, I break it down, I turned your knife around, " +
-                          "I made stronger I keeped free, All the dreams I will be see";
+        String someText = "I`ll be back";
         String key = "Bar12345Bar12345";
         Rijndael algo = new Rijndael(key, someText);
 
