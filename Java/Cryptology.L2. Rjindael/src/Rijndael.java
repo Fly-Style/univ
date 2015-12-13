@@ -1,4 +1,8 @@
+import sun.jvm.hotspot.tools.SysPropsDumper;
 import sun.security.util.BitArray;
+
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by MakeYouHappy on 24.09.2015.
@@ -10,12 +14,11 @@ public class Rijndael
     private String input;
 
     private byte[] byteKey;
-    private int[] inputBytes;
+    private byte[] inputBytes;
+    private int[] intKey;
 
     private int[][] state;
     private int[][] deployedKey;
-    private BitArray deployedBitKey;
-
     int [] sbox = {
                 0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
                 0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
@@ -34,6 +37,26 @@ public class Rijndael
                 0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
                 0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
     };
+
+    public static final int[][] invsbox = {
+            {0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38, 0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb},
+            {0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87, 0x34, 0x8e, 0x43, 0x44, 0xc4, 0xde, 0xe9, 0xcb},
+            {0x54, 0x7b, 0x94, 0x32, 0xa6, 0xc2, 0x23, 0x3d, 0xee, 0x4c, 0x95, 0x0b, 0x42, 0xfa, 0xc3, 0x4e},
+            {0x08, 0x2e, 0xa1, 0x66, 0x28, 0xd9, 0x24, 0xb2, 0x76, 0x5b, 0xa2, 0x49, 0x6d, 0x8b, 0xd1, 0x25},
+            {0x72, 0xf8, 0xf6, 0x64, 0x86, 0x68, 0x98, 0x16, 0xd4, 0xa4, 0x5c, 0xcc, 0x5d, 0x65, 0xb6, 0x92},
+            {0x6c, 0x70, 0x48, 0x50, 0xfd, 0xed, 0xb9, 0xda, 0x5e, 0x15, 0x46, 0x57, 0xa7, 0x8d, 0x9d, 0x84},
+            {0x90, 0xd8, 0xab, 0x00, 0x8c, 0xbc, 0xd3, 0x0a, 0xf7, 0xe4, 0x58, 0x05, 0xb8, 0xb3, 0x45, 0x06},
+            {0xd0, 0x2c, 0x1e, 0x8f, 0xca, 0x3f, 0x0f, 0x02, 0xc1, 0xaf, 0xbd, 0x03, 0x01, 0x13, 0x8a, 0x6b},
+            {0x3a, 0x91, 0x11, 0x41, 0x4f, 0x67, 0xdc, 0xea, 0x97, 0xf2, 0xcf, 0xce, 0xf0, 0xb4, 0xe6, 0x73},
+            {0x96, 0xac, 0x74, 0x22, 0xe7, 0xad, 0x35, 0x85, 0xe2, 0xf9, 0x37, 0xe8, 0x1c, 0x75, 0xdf, 0x6e},
+            {0x47, 0xf1, 0x1a, 0x71, 0x1d, 0x29, 0xc5, 0x89, 0x6f, 0xb7, 0x62, 0x0e, 0xaa, 0x18, 0xbe, 0x1b},
+            {0xfc, 0x56, 0x3e, 0x4b, 0xc6, 0xd2, 0x79, 0x20, 0x9a, 0xdb, 0xc0, 0xfe, 0x78, 0xcd, 0x5a, 0xf4},
+            {0x1f, 0xdd, 0xa8, 0x33, 0x88, 0x07, 0xc7, 0x31, 0xb1, 0x12, 0x10, 0x59, 0x27, 0x80, 0xec, 0x5f},
+            {0x60, 0x51, 0x7f, 0xa9, 0x19, 0xb5, 0x4a, 0x0d, 0x2d, 0xe5, 0x7a, 0x9f, 0x93, 0xc9, 0x9c, 0xef},
+            {0xa0, 0xe0, 0x3b, 0x4d, 0xae, 0x2a, 0xf5, 0xb0, 0xc8, 0xeb, 0xbb, 0x3c, 0x83, 0x53, 0x99, 0x61},
+            {0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d}
+    };
+
 
     int [] revbox =    {
                 0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38, 0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
@@ -54,29 +77,59 @@ public class Rijndael
                 0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d
     };
 
+    public static final int[][] galois = {
+            {0x02, 0x03, 0x01, 0x01},
+            {0x01, 0x02, 0x03, 0x01},
+            {0x01, 0x01, 0x02, 0x03},
+            {0x03, 0x01, 0x01, 0x02}
+    };
+
+    // rCon is Round Constant used for the Key Expansion [1st col is 2^(r-1) in GF(2^8)] [§5.2]
+    public static final int[][] rCon = {
+        {0x00, 0x00, 0x00, 0x00},
+        {0x01, 0x00, 0x00, 0x00},
+        {0x02, 0x00, 0x00, 0x00},
+        {0x04, 0x00, 0x00, 0x00},
+        {0x08, 0x00, 0x00, 0x00},
+        {0x10, 0x00, 0x00, 0x00},
+        {0x20, 0x00, 0x00, 0x00},
+        {0x40, 0x00, 0x00, 0x00},
+        {0x80, 0x00, 0x00, 0x00},
+        {0x1b, 0x00, 0x00, 0x00},
+        {0x36, 0x00, 0x00, 0x00}
+};
 
     private int arrLen = 4;
 
-    Rijndael(String key, String input)
-    {
+    Rijndael(String key, String input) {
         try {
             this.key = key;
             this.input = input;
 
-            byte [] byteKey = key.getBytes();
+            byte[] byteKey = key.getBytes();
             this.byteKey = byteKey;
+            this.intKey = new int[arrLen * (arrLen + 6)];
+            this.inputBytes = input.getBytes();
+            state = new int[arrLen][arrLen];
 
+            System.out.println(inputBytes.length);
+            System.out.println("----------------");
 
-            for (int i = 0; i < arrLen; i++)
-                for (int j = 0; i < arrLen; j++) {
-                    state[i][j] = inputBytes[i + arrLen*j];
+            for (int i = 0; i < byteKey.length; i++) {
+                intKey[i] = (int) byteKey[i];
+            }
+
+            this.deployedKey = KeyExpansion(intKey);
+
+            for (int i = 0; i < arrLen; ++i) {
+                for (int j = 0; j < arrLen; ++j) {
+                    state[i][j] = inputBytes[i * arrLen + j];
                 }
+            }
+        } catch (Exception anyOther) {
+            anyOther.printStackTrace();
 
-            //this.deployedBitKey = new BitArray(128);
-        }
 
-            catch (Exception anyOther) {
-            System.err.println("General Exeption");
         }
     }
 
@@ -88,115 +141,159 @@ public class Rijndael
         return res % 256;
     }
 
-    private int[] CRot (int[] input, int size, int part) {
-        int[] arr = new int[size];
+    private int[][] KeyExpansion(int[] key) {
+    int roundsNumber = arrLen + 6;
 
-        for (int i = 1; i < size; i++)
-            arr[i] = input[i - 1];
-        arr[size - 1] = arr[0];
+    int[][] res = new int[arrLen*roundsNumber][arrLen];
 
-        return arr;
+    int[] temp = new int[arrLen];
+
+    // initialise first Nk words of expanded key with cipher key
+    for (int i = 0; i < roundsNumber; i++) {
+        int[] keyBlock = {key[4*i], key[4*i+1], key[4*i+2], key[4*i+3]};
+        res[i] = keyBlock;
     }
 
-    private int [] SBlock(int [] t, boolean encrypt) {       // S - преобразование;
+    // expand the key into the remainder of the schedule
+    for (int i = roundsNumber; i < arrLen*roundsNumber; i++) {
 
-        int [] res = new int[t.length];
-        int [] box = new int[256];
-        if (encrypt)
-            box = sbox;
+        for (int t = 0; t < 4; t++)
+            temp[t] = res[i-1][t];
+        // each Nk'th word has extra transformation
+        if (i % roundsNumber == 0) {
+            RotWord(temp);
+            SubWord(temp);
+            for (int t=0; t<4; t++)
+                temp[t] ^= rCon[i/roundsNumber][t];
+        }
 
-        for (int i = 0; i < t.length; i++) {
-            int row = t[i];
-            int col = t[i] % 0x10;
-            int box_elem = box[16 * row + col];
-            res[i] = box_elem;
+        // xor w[i] with w[i-1] and w[i-Nk]
+        for (int t = 0; t < 4; t++)
+            res[i][t] = res[i-roundsNumber][t] ^ temp[t];
+    }
+
+    return res;
+}
+
+    private int[][] AddRoundKey(int k) {
+
+        int[][]res = new int[arrLen][arrLen];
+
+        for(int i = 0; i < arrLen; i++)
+            for (int j = 0; j < arrLen; j++) {
+                res[i][j] = state[i][j] ^ this.intKey[k * arrLen + i];
+            }
+        return res;
+    }
+
+    private int[][] SubBytes (int [][] mtrx) {
+       int[][] res = new int [arrLen][arrLen];
+
+        for (int r = 0; r < arrLen; r++) {
+            for (int c = 0; c < arrLen; c++)
+                res[r][c] = sbox[mtrx[r][c]];
         }
         return res;
     }
 
-    private int [] KeyDeploy () {
-
-        try {
-
-            int[][] tempKey = new int[arrLen][arrLen];
-
-            for (int i = 0; i < arrLen; i++) {
-                for (int j = 0; j < arrLen; j++) {
-                    tempKey[i][j] = byteKey[i + arrLen * j];
-                }
+    public void InvSubBytes(int[][] mtrx) {
+        for (int i = 0; i < mtrx.length; i++) //Inverse Sub-Byte subroutine
+        {
+            for (int j = 0; j < mtrx[0].length; j++) {
+                int hex = mtrx[j][i];
+                mtrx[j][i] = invsbox[hex / 16][hex % 16];
             }
-
-            int[] WKey = new int[16];
-
-            for (int i = 0; i < tempKey.length; i++) {
-                for (int j = 0; j < tempKey.length; j++) {
-                    WKey[i] = tempKey[i][j];
-                }
-            }
-
-            for (int k = 1; k < 10; k++) {
-
-                assert WKey != null;
-
-                int[] RC = new int[4];
-                RC[0] = pow(k);
-                RC[1] = RC[2] = RC[3] = 0;
-
-                int[] T = CRot(WKey, arrLen, k % 4);//циклический сдвиг влево на 1байт(8 бит)
-                int[] F = SBlock(T, true);
-                int[] D = new int[this.arrLen];
-
-                for (int i = 0; i < arrLen; i++) {
-                    D[i] = (byte) (F[i] ^ RC[k]);
-
-                    WKey[4 * k] = (byte) (WKey[4 * k - 4] ^ D[i]);
-                    WKey[4 * k + 1] = (byte) (WKey[4 * k - 3] ^ WKey[4 * k]);
-                    WKey[4 * k + 2] = (byte) (WKey[4 * k - 2] ^ WKey[4 * k + 1]);
-                    WKey[4 * k + 3] = (byte) (WKey[4 * k - 1] ^ WKey[4 * k + 2]);
-                }
-            }
-            return WKey;
         }
-
-        catch (Exception e) {
-            System.err.println("hmm");
-        }
-            return null;
     }
 
+    private int[][] ShiftRows(int[][] mtrx) {
+        int[][] newmtrx = new int[arrLen][arrLen];
+                                                                            // no changes in first row;
+        for (int r = 1; r<4; r++) {
+            int[] t = new int[arrLen];
+            for (int c = 0; c < 4; c++) t[c] = mtrx[r][(c+r) % arrLen];     // shift into temp copy
+            for (int c = 0; c < 4; c++) newmtrx[r][c] = t[c];
+        }
+        return newmtrx;
+    }
 
+    public void MixColumns(int[][] mtrx) {
+        int[][] arr = new int[arrLen][arrLen];
+        for(int i = 0; i < 4; i++)
+        {
+            System.arraycopy(mtrx[i], 0, arr[i], 0, 4);
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                mtrx[i][j] = mcHelper(arr, galois, i, j);
+            }
+        }
+    }
 
-    private int [] AddRoundKey(int k) {
+    /**
+     * Helper method of mixColumns in which compute the mixColumn formula on each element.
+     * @param galuas the galois field
+     */
 
-        int [][] res = new int[arrLen][arrLen];
-        int [] K = KeyDeploy();
-        for(int i = 0; i < arrLen; i++)
+    private int mcHelper(int[][] arr, int[][] galuas, int i, int j) {
+        int mcsum = 0;
+        for (int k = 0; k < 4; k++) {
+            int a = galuas[i][k];
+            int b = arr[k][j];
+            mcsum ^= mcCalc(a, b);
+        }
+        return mcsum;
+    }
+
+    private int mcCalc(int a, int b) {
+        if (a == 1) {
+            return b;
+        } else if (a == 2) {
+            return MCTables.mc2[b / 16][b % 16];
+        } else if (a == 3) {
+            return MCTables.mc3[b / 16][b % 16];
+        }
+        return 0;
+    }
+
+    private void SubWord (int[] word) {
+        for (int i=0; i < 4; i++)
+            word[i] = sbox[word[i]];
+    }
+
+    private void RotWord (int[] word) {
+        int tmp = word[0];
+        for (int i = 0; i < 3; i++)
+            word[i] = word[i + 1];
+
+        word[3] = tmp;
+    }
+
+    public int[] Encrypt () {
+
+        int[][] temp = state;
+        temp = AddRoundKey(0);
+        for (int i = 1; i < 9; i++) {
+            int[][] T = SubBytes(temp);
+            ShiftRows(T);
+            MixColumns(T) ;
+            AddRoundKey(i);
+            temp = T;
+        }
+        SubBytes(temp);
+        ShiftRows(temp);
+        AddRoundKey(9);
+
+        int[] output = new int[arrLen*arrLen];
+        for (int i = 0; i < arrLen; i++) {
             for (int j = 0; j < arrLen; j++) {
-                res[i][j] = state[i][j] ^ K[i*arrLen + j];
+                output[i*4 + j] = temp[i][j];
             }
-
-        return res[k];
-    }
-
-    private int[][] SubBytes (int [][] mtrx) {
-
-    }
-
-
-
-    public byte[] Encrypt (String toEncrypt) {
-        try {
-
-
-            }
-            catch (Exception e) {
-                System.err.println("Something went wrong");
-            }
-        return null;
-
         }
+        return output;
+    }
 
-    public String Decrypt (byte [] encryptedBytes) {
+    public String Decrypt (int [] encryptedBytes) {
 
         try {
 
@@ -208,11 +305,12 @@ public class Rijndael
     }
 
     public static void main(String[] args) {
-        String someText = "I`ll be back";
+        String someText = "I`ll be back, TR";
         String key = "Bar12345Bar12345";
         Rijndael algo = new Rijndael(key, someText);
 
-        byte [] ars = algo.Encrypt(someText);
+        int[] ars = algo.Encrypt();
+        System.out.println(ars);
         String res = algo.Decrypt(ars);
 
         System.out.println(res);
