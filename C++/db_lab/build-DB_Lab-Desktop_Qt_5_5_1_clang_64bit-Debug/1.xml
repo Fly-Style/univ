@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="template.xsl"?>
+<cold-weapons xmlns:cmn="http://www.jpilgrim.com/CommonTypes" xmlns="http://www.jpilgrim.com/Knife" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.jpilgrim.com/Knife Knife.xsd">
+    
+    <device serial="ASUS">
+        <cmn:Name>ASUS</cmn:Name>
+        <cmn:origin>USA</cmn:origin>
+        <price>2400.0</price>
+
+
+
+
+
+    <knife serial="B">
+        <cmn:type>Light Sword</cmn:type>
+        <handy>
+            <cmn:two-handed />
+        </handy>
+        <cmn:origin>Hoth</cmn:origin>
+        <visual-proportions>
+            <cmn:length cmn:units="cm">10</cmn:length>
+            <cmn:width cmn:units="mm">10</cmn:width>
+        </visual-proportions>
+        <visual-material>
+            <cmn:blade>Laser</cmn:blade>
+            <cmn:handle>
+                <cmn:wood>red</cmn:wood>
+            </cmn:handle>
+            <cmn:blood-flow>false</cmn:blood-flow>
+        </visual-material>
+        <cmn:value cmn:collection="false"/>
+    </knife>
+
+
+    <knife serial="A">
+        <cmn:type>Rings of Power</cmn:type>
+        <handy>
+            <cmn:one-handed />
+        </handy>
+        <cmn:origin>Mordor</cmn:origin>
+        <visual-proportions>
+            <cmn:length cmn:units="cm">10</cmn:length>
+            <cmn:width cmn:units="mm">10</cmn:width>
+        </visual-proportions>
+        <visual-material>
+            <cmn:blade>Gold</cmn:blade>
+            <cmn:handle>
+                <cmn:steel/>
+            </cmn:handle>
+            <cmn:blood-flow>false</cmn:blood-flow>
+        </visual-material>
+        <cmn:value cmn:collection="true"/>
+    </knife>
+</cold-weapons>

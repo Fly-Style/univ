@@ -311,9 +311,9 @@ public class Rijndael
 
         int[] ars = algo.Encrypt();
         System.out.println(ars);
-        String res = algo.Decrypt(ars);
-
-        System.out.println(res);
+//        String res = algo.Decrypt(ars);
+//
+//        System.out.println(res);
 
     }
 
