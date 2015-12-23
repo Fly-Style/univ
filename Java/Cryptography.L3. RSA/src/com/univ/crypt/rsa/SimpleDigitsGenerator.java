@@ -37,8 +37,8 @@ public class SimpleDigitsGenerator {
         Random random = new Random(System.currentTimeMillis());
         //this.firstNumber = variants.get(random.nextInt(variants.size()-1));
         //this.lastNumber = variants.get(random.nextInt(variants.size()-1));
-        this.firstNumber = BigInteger.probablePrime(2048, random);
-        this.lastNumber = BigInteger.probablePrime(2048, random);
+        this.firstNumber = BigInteger.probablePrime(16, random);
+        this.lastNumber = BigInteger.probablePrime(16, random);
         //while (lastNumber.equals(firstNumber))
         //    this.lastNumber = variants.get(random.nextInt(variants.size()-1));
 

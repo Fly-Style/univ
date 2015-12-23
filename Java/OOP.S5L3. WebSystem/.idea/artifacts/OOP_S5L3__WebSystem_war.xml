@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="OOP.S5L3. WebSystem:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="webserviceL3-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="OOP.S5L3. WebSystem:war exploded" />
+    </root>
+  </artifact>
+</component>
