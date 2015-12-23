@@ -1,0 +1,9 @@
+C 2     // request resource 1
+R 1     // request resource 0
+C 1
+R 2     // request resource 1
+C 5     // request resource 1
+F 1     // free resource 0
+F 2     // free resource 0
+C 2
+H       // halt process

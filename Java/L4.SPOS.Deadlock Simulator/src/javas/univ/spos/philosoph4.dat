@@ -1,0 +1,9 @@
+C 2    // compute for 10 milliseconds
+R 4     // request resource 0
+C 1
+R 0     // request resource 1
+C 5     // request resource 1
+F 4     // free resource 0
+F 0     // free resource 0
+C 2
+H       // halt process

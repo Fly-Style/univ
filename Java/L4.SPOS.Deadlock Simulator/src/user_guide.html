@@ -1,0 +1,571 @@
+<html>
+<head>
+<title>Moss | Deadlock Simulator | User Guide</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>
+MOSS
+Deadlock Simulator
+<br>User Guide</h1>
+
+<h2>Purpose</h2>
+
+<p>
+This document is a user guide for the MOSS
+Deadlock Simulator.  It explains how to use the simulator and
+describes the display and the various input files used by and output files
+produced by the simulator.  The MOSS software
+is designed for use with 
+<a href="http://www.cs.vu.nl/~ast/">Andrew S. Tanenbaum</a>, 
+<a href="http://vig.prenhall.com/catalog/academic/product/1,4096,0130313580,00.html">Modern Operating Systems, 2nd Edition</a> 
+(<a href="http://www.prenhall.com/">Prentice Hall</a>, 2001).  
+The Deadlock Simulator and this user guide were written by 
+<a href="http://www.ontko.com/~rayo/">Ray Ontko</a>
+(<a href="mailto:rayo@ontko.com"><i>rayo@ontko.com</i></a>).
+<p>
+This user guide assumes that you have already installed and tested
+the simulator.  If you are looking for installation information,
+please read the 
+<a href="install_unix.html">Installation Guide for 
+Unix/Linux/Solaris/HP-UX Systems</a> or the 
+<a href="install_windows.html">Installation Guide for 
+Win95/98/Me/NT/2000 Systems</a>.
+</p>
+
+<h2>Introduction</h2>
+<p>
+The deadlock simulator illustrates multiple processes competing 
+for one or more resources to investigate the nature and causes of 
+deadlock conditions and how they can be avoided, detected, and 
+resolved. The simulator includes a graphical user interface that 
+allows the student to step through the "programs" being 
+concurrently "executed" by each of the processes and see which 
+processes are blocked by which resources. A typical student lab 
+exercise might require students to write simple "programs" for 
+the simulator to investigate different kinds of resource 
+contention conditions.  More advanced students might write a 
+deadlock manager (in Java) based on the template provided, and 
+test it using "programs" of their own design. 
+
+</p>
+
+<h2>Overview</h2>
+
+<p>
+The deadlock simulator performs the following steps
+as part of the simulation:
+
+<ul>
+<li>It creates a specified number of simulated processes.
+<li>For each process, it reads a command file of actions
+to be performed by that process.  Each action is one of
+the following:
+<ul>
+<li>compute for a specified length of time
+<li>request an instance of a specified resource
+<li>free an instance of a specified resource
+<li>end or halt the process
+</ul>
+<li>It creates a specified number of instances for each
+of several resources.
+<li>It "executes" the simulation by considering the commands
+for each process, one at a time, and either allowing the process
+to execute, granting it an instance of a requested resource, 
+blocking the process until a requested is available, or ending a 
+process.
+<li>As the execution proceeds, the display is updated to reflect
+the status of each process, and the number of available instances
+of each resource.
+<li>At the end of each cycle of execution, the simulator writes
+a "log" message indicating the time since the beginning of the 
+simulation, the number of available instances of each resource,
+the number of blocked processes, etc.
+<li>The user may "step" through the simulation to view the 
+action at each cycle, or may "run" the simulation to completion.
+<li>When all processes are halted, the simulation stops.
+</ul>
+
+<h2>Running the Simulator</h2>
+
+<p>
+To run the program, enter the following command line.
+
+<blockquote><pre>
+$ java deadlock a 2 1 >a.log
+</pre></blockquote>
+
+In this example, 
+
+<dl>
+<dt>a
+<dd>is the prefix for the names of the files containing the commands,
+(the actual names of the files are "a0.dat", and "a1.dat"),
+<dt>2
+<dd>is the number of processes to be created,
+<dt>1
+<dd>is the number of instances to create for the first resource, and
+<dt>a.log
+<dd>is the name of the output file.
+</dl>
+
+<p>
+The program will display a window allowing you to run the
+simulator.  You will notice a row of command buttons across
+the top, and an informational display below.  The left side
+of the information display lists the resources and the
+number of available instances for each, and the 
+right side lists the processes and the current status for each.
+</p>
+<IMG SRC="user_guide_1.gif">
+<p>
+Typically you will
+use the <tt>step</tt> button to execute a cycle of the simulation
+and observe the effect on the resources and processes.
+When you're done, quit the simulation using the <tt>exit</tt> button.
+
+<h3>The Command Line</h3>
+
+<p>
+The general form of the command line is
+</p>
+<blockquote>
+$ java deadlock <i>file-name-prefix</i> <i>initial-number-of-processes</i>
+<i>initial-available-for-resource</i> ...
+</blockquote>
+<p>
+where
+</p>
+<table border="1" cellspacing="0">
+<tr><th>Parameter
+<th>Description</th>
+<tr>
+<td valign="top"><i>file-name-prefix
+<td>Specifies the name prefix for the process command files.
+The default command file names are generated from this prefix,
+followed by the number of the process, followed by ".dat"
+(e.g, "a0.dat", "a1.dat" if "a" is the prefix).
+The actual names of the files
+may be entered or modified in the Processes Dialog (see below).
+<tr>
+<td valign="top"><i>initial-number-of-processes
+<td>Specifies the number of processes to create for the simulation.
+This should be a non-negative number, usually greater than one.
+This number may also be entered or modified using 
+the Options Dialog (see below).
+<tr>
+<td valign="top"><i>initial-available-for-resource</i>...
+<td>Specifies the initial number of instances available for each
+resource.  This should be a sequence of non-negative numbers.
+For example, "2 1 2 0" indicates that there are four resources,
+and there are initially two instances of resource 0, one instance
+of resource 1, two instances of resource 2, and zero instances 
+of resource 3.  The <em>number</em> of resources may also 
+be entered or modified using the Options Dialog (see below).
+The initial number of instances <em>available</em> for each
+resource may be entered or modified using the Resources Dialog 
+(see below).
+</table>
+
+<h3>The Control Panel</h3>
+
+<p>
+The main control panel for the simulator includes a row of 
+command buttons, and an informational display. 
+</p>
+
+<IMG SRC="user_guide_1.gif">
+<p>
+The buttons:
+</p>
+<table border="1" cellspacing="0">
+<tr><th>Button
+<th>Description</th>
+<tr><td valign="top"><tt>run</tt>
+<td valign="top">runs the simulation to completion.  Note that the simulation
+pauses and updates the screen between each step.
+<tr><td valign="top"><tt>stop</tt>
+<td valign="top">stops the simulation if it is running.  This button is only
+active if the run button has been pressed.
+<tr><td valign="top"><tt>step</tt>
+<td valign="top">runs a single setup of the simulation and updates the display.
+<tr><td valign="top"><tt>reset</tt>
+<td valign="top">initializes the simulator and starts from the initial values
+for each process and resource.
+<tr><td valign="top"><tt>options</tt>
+<td valign="top">allows you to change various options for the simulator, 
+including the number of resources and the number of processes.
+<tr><td valign="top"><tt>resources</tt>
+<td valign="top">allows you to change the configuration for each resource,
+including the initial and current number of instances available for each
+resource.
+<tr><td valign="top"><tt>processes</tt>
+<td valign="top">allows you to change the configuration for each process,
+including current state and the name of the command file for that process.
+<tr><td valign="top"><tt>exit</tt>
+<td valign="top">exits the simulation.
+</table>
+
+<p>
+The informational display:
+</p>
+<table border="1" cellspacing="0">
+<tr><th>Field
+<th>Description</th>
+<tr><td valign="top"><tt>Time:</tt>
+<td valign="top">number of "milliseconds" since the start of the simulation.
+<tr><td valign="top"><tt>Resource Id:</tt>
+<td valign="top">A number which identifies the particular resource.  
+Resources are numbered starting with zero.
+<tr><td valign="top"><tt>Resource Available:</tt>
+<td valign="top">The number of instances available for the particular
+resource.  This is a non-negative number.
+<tr><td valign="top"><tt>Process Id:</tt>
+<td valign="top">A number which identifies the particular process.
+Processes are numbered starting with zero.
+<tr><td valign="top"><tt>Process State:</tt>
+<td valign="top">The current state of the process.  This may be U (unknown), 
+C (computable), W (waiting), or H (halted).  At the beginning of the simulation,
+all processes have U status.  While a process is computable, it has a C status.
+If it requests a resource which is unavailable, it enters W status until
+the resource becomes available. When a process has completed all the commands
+in its command file or performs a halt command, it enters H status.
+<tr><td valign="top"><tt>Process Resource:</tt>
+<td valign="top">The resource for which this process is waiting, if any.
+This field only has a value if the process is in W status.
+</table>
+
+<h3>The Options Dialog Box</h3>
+
+<p>
+The Options Dialog Box allows you to set general options for
+the simulator.
+</p>
+<IMG SRC="user_guide_2.gif">
+<p>
+The options:
+</p>
+<table border="1" cellspacing="0">
+<tr><th>Field
+<th>Description</th>
+<tr>
+<td valign="top"><tt>Number of Processes:</tt>
+<td valign="top">The number of processes to use in the simulation.
+This should be a non-negative number, usually at least two. 
+Although
+the program does not enforce a limit, you may not be able to view more
+than about 10 processes on the informational display on your display screen.
+The initial value for this option is obtained from the second parameter
+on the command line, or zero, if not specified.
+Keep in mind that each process should have a process command file.  
+To set properties for individual processes, use the Processes Dialog 
+(see below).
+<tr>
+<td valign="top"><tt>Number of Resources:</tt>
+<td valign="top">The number of resources available in the simulation.
+This should be a non-negative number, usually at least one.  Although
+the program does not enforce a limit, you may not be able to view more than
+about 10 resources on the informational display on your display screen.  
+The initial value for this option is obtained
+from the number of initial instances for each resource specified on
+the command line (see above), or zero, if none are specified.  This
+number should be one more than the largest resource number mentioned
+in any of the process command files for the simulation.
+To set properties for individual resources, use the Resources Dialog
+(see below).
+<tr>
+<td valign="top"><tt>Milliseconds per step:</tt>
+<td valign="top">The number of real-time milliseconds to pause between each 
+cycle of the simulator in "run" mode.  This is the pause between cycles
+when you hit the run button.  The default value is 1000 milliseconds, or,
+one second.
+</table>
+
+<h3>The Processes Dialog Box</h3>
+
+<p>
+The Processes Dialog Box allows you to enter or modify properties 
+for each process.
+</p>
+
+<IMG SRC="user_guide_4.gif">
+<p>
+The process properties:
+</p>
+<table border="1" cellspacing="0">
+<tr><th>Field
+<th>Description</th>
+<tr>
+<td valign="top"><tt>Number of Processes:</tt>
+<td valign="top">The number of processes in the simulation.
+To change this value, use the Options Dialog (see above).
+<tr>
+<td valign="top"><tt>Process Id</tt>
+<td valign="top">The id number for the process.  These numbers
+are used to identify each process and are assigned by the simulator,
+starting with zero.  These numbers cannot be changed.
+<tr>
+<td valign="top"><tt>Process File Name</tt>
+<td valign="top">The name of the file from which process commands
+are read.  This may be any valid filename.
+For convenience, there is a choose button which allows you to browse
+the file system to choose the file.  By default, the name is the 
+prefix string, followed by the process number, followed by ".dat".
+</table>
+
+<h3>The Resources Dialog Box</h3>
+
+<p>
+The Resources Dialog Box allows you to enter and modify properties
+for each resource.
+</p>
+<IMG SRC="user_guide_3.gif">
+<p>
+The resource properties:
+</p>
+<table border="1" cellspacing="0">
+<tr><th>Field
+<th>Description</th>
+<tr>
+<td valign="top"><tt>Number of resources:</tt>
+<td valign="top">The number of resources available in the simulation.
+To change this value, use the Options Dialog (see above).
+<tr>
+<td valign="top"><tt>Resource Id</tt>
+<td valign="top">The id number assigned to the resource.  This number
+is used to identify the resource and is 
+assigned by the simulator and cannot be changed.  This is the 
+number which appears in the R (request resource) and F (free resource)
+commands in the process command files.
+<tr>
+<td valign="top"><tt>Resource Initial</tt>
+<td valign="top">The initial number of available instances of the resource.
+This number is used when the simulator starts or is reset.
+<tr>
+<td valign="top"><tt>Resource Current</tt>
+<td valign="top">The current number of available instances of the resource.
+This number may be changed during the simulation to see the effect it
+may have on processes waiting for the resource.
+</table>
+
+<h2>The Process Command Files</h2>
+
+<p>
+The process command files for the simulator specifies a sequence
+operations to be performed by the process or processes which use
+the file.  There are four operations defined C (compute), 
+R (request resource), F (free resource) and H (halt).
+
+<table border="1" cellspacing="0">
+<tr>
+<th>Operation</th>
+<th>Description</th>
+<tr>
+<td valign="top"><tt>C</tt> <i>msec</i></td>
+<td valign="top">Compute for the specified number of milliseconds (cycles).
+<tr>
+<td valign="top"><tt>R</tt> <i>resource-id</i></td>
+<td valign="top">Request an instance of the specified resource.  If none 
+are available, block the process until the resource becomes available.
+The resource id should be a non-negative number <em>less than</em> 
+the total number of resources available.
+<tr>
+<td valign="top"><tt>F</tt> <i>resource-id</i></td>
+<td valign="top">Free an instance of the specified resource.
+This is usually a resource that was previously requested by
+the process.
+The resource id should be a non-negative number <em>less than</em>
+the total number of resources available.
+<tr>
+<td valign="top"><tt>H</tt></td>
+<td valign="top">Halt the process.  This is usually the last
+operation in the file.  Any commands which follow it in the file
+are ignored. Any file that does not end with this operation is
+implicitly halted.
+</table>
+
+<h3>Sample Process Command Files</h3>
+<p>
+The "a0.dat" input file looks like this:
+</p>
+<blockquote><pre>
+/*
+a0.dat
+
+The "a" collection of process data files is meant to simulate
+two processes competing for a single resource.  If you run
+the simulator with one resource available, one of the processes
+will block until the other is done using the resource.
+*/
+C 10    // compute for 10 milliseconds
+R 0     // request resource 0
+C 10    // compute for 10 milliseconds
+F 0     // free resource 0
+H       // halt process
+
+</pre></blockquote>
+
+<p>
+Note that the "a1.dat" file is identical.  In other words, both
+files request the same resources at approximately the same time.
+</p>
+
+<h2>The Output File</h2>
+
+<p>
+The output file contains a log of the simulation
+since the simulation started.
+<p>
+The output file contains one line per cycle
+executed.  The format of each line is:
+<blockquote><pre>
+time = <i>t</i> available = <i>r<sub>0</sub></i> <i>r<sub>1</sub></i> ... <i>r<sub>n</sub></i> blocked = <i>n</i>
+</pre></blockquote>
+where
+<dl>
+<dt><i>t</i>
+<dd>is the number of milliseconds since the start of the simulation,
+<dt><i>r<sub>i</sub></i>
+<dd>is the number of available instances of each resource, and
+<dt><i>n</i>
+<dd>is the number of blocked processes.
+</dl>
+<h3>Sample Output</h3>
+
+<p>
+The output file "a.log" looks something like this:
+</p>
+<blockquote><pre>
+time = 0 available = 1 blocked = 0
+time = 1 available = 1 blocked = 0
+time = 2 available = 1 blocked = 0
+time = 3 available = 1 blocked = 0
+time = 4 available = 1 blocked = 0
+time = 5 available = 1 blocked = 0
+time = 6 available = 1 blocked = 0
+time = 7 available = 1 blocked = 0
+time = 8 available = 1 blocked = 0
+time = 9 available = 1 blocked = 0
+time = 10 available = 0 blocked = 1
+time = 11 available = 0 blocked = 1
+time = 12 available = 0 blocked = 1
+time = 13 available = 0 blocked = 1
+time = 14 available = 0 blocked = 1
+time = 15 available = 0 blocked = 1
+time = 16 available = 0 blocked = 1
+time = 17 available = 0 blocked = 1
+time = 18 available = 0 blocked = 1
+time = 19 available = 0 blocked = 1
+time = 20 available = 0 blocked = 0
+time = 21 available = 0 blocked = 0
+time = 22 available = 0 blocked = 0
+time = 23 available = 0 blocked = 0
+time = 24 available = 0 blocked = 0
+time = 25 available = 0 blocked = 0
+time = 26 available = 0 blocked = 0
+time = 27 available = 0 blocked = 0
+time = 28 available = 0 blocked = 0
+time = 29 available = 0 blocked = 0
+time = 30 available = 1 blocked = 0
+
+</pre></blockquote>
+<p>
+In this example, the simulation runs for a total of 30 "milliseconds"
+and then halts.  During the simulation, all processes are computable
+for 10 milliseconds. During the next 10 milliseconds, 
+the one instance of the resource is allocated
+to one process, while the other process is blocked.  During the
+final 10 milliseconds, the first process frees the resource,
+but it is immediately allocated by the second process, which 
+then continues to compute, unblocked, to the end of the simulation.
+</p>
+
+<h2>Suggested Exercises</h2>
+
+<ol>
+<li>Try running the deadlock simulator using the following command:
+<blockquote><pre>
+java deadlock a 2 2
+</pre></blockquote>
+Explain why a deadlock does <em>not</em> occur.
+<p><!-- --></p>
+
+<li>There are two additional process command files ("b0.dat" and 
+"b1.dat") in the distribution.  Run the deadlock simulator with 
+this command:
+<blockquote><pre>
+java deadlock b 2 1 1
+</pre></blockquote>
+What happens?
+<p>
+Now try this.
+<blockquote><pre>
+java deadlock b 2 1 2
+</pre></blockquote>
+Why does the first command result in a deadlock but the 
+second does not?   
+Explain your answer in terms of what is going on in the process 
+command files, b0.dat and b1.dat.
+<p><!-- --></p>
+<!--
+<li>Modify the deadlocked() method of DeadlockManager.java to
+handle the case where all processes are deadlocked and one must
+be terminated and its resources freed.
+-->
+</ol>
+
+<h2>To Do</h2>
+<ol>
+<li>New snapshots of each panel.  The current ones are out of date
+and they have garish colors.
+
+<li>A better strategy for handling error messages.  There are a few
+places where it would be better to post an alert message if the
+user enters an invalid value.  Currently, we only write a message
+to stdout.
+
+<li>The close button on the window does not seem to work under Windows.
+
+<li>If the number of processes or resources is changed, the panel
+should resize itself.
+
+<li>If the number of processes or resources is large (~>10), then the 
+display does not fit within the window or screen.  This should 
+cause a scroll-bar to appear.
+
+<li>allow the filename prefix and suffix to be specified in the 
+options dialog.
+
+<li>Needs to be runnable without a display.  This would need to
+achieve the same effect as clicking the run button and then the 
+exit button at the end of the simulation, but NOT creating the
+window and buttons or any other component of the graphical display.
+This may take a fair amount of rework.
+</ol>
+
+<h2>Copyright</h2>
+
+&copy; Copyright 2001, Prentice-Hall, Inc.
+<p>
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+<p>
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+<p>
+You should have received a copy of the GNU General Public License
+along with this program (see <a href="java/univ/spos/deadlock/copying.txt">copying.txt</a>);
+if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+<p>
+
+Please send suggestions, corrections, and comments to
+<a href="http://www.ontko.com/~rayo/">Ray Ontko</a> 
+(<a href="mailto:rayo@ontko.com"><i>rayo@ontko.com</i></a>).
+<p>
+<i>Last updated: August 18, 2001</i>
+</body>
+</html>
