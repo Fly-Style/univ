@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="oop.task3.model.User" table="user">
+        <meta attribute="class-description">
+            This class contains the user detail.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <property name="surname" column="surname" type="string"/>
+        <property name="phone" column="phone" type="string"/>
+        <property name="city" column="city" type="string"/>
+        <property name="address" column="address" type="string"/>
+        <property name="birthday" column="birthday" type="date"/>
+        <property name="registration" column="registration_date" type="timestamp"/>
+    </class>
+</hibernate-mapping>

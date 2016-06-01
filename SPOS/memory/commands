@@ -1,0 +1,51 @@
+// Enter READ/WRITE commands into this file
+// READ <OPTIONAL number type: bin/hex/oct> <virtual memory address or random>
+// WRITE <OPTIONAL number type: bin/hex/oct> <virtual memory address or random>
+WRITE hex 0 // page 0
+READ hex 94123 // page 37
+WRITE hex e7fff // page 57
+READ hex e3eef // page 56
+READ hex b7ea1 // page 45
+WRITE hex 0 // page 0
+READ hex 24334 // page 9
+READ hex adeff // page 43
+WRITE hex 29215 // page 10
+READ hex f890 // page 3
+WRITE hex 12345 // page 4
+WRITE hex bb509 // page 46
+WRITE hex c4526 // page 0
+READ hex ccae8 // page 49
+READ hex 29978 // page 10
+WRITE hex a242 // page 2
+READ hex faeea  // page 62
+READ hex aaaaa // page 42
+WRITE hex adada // page 43
+READ hex 123 // page 0
+WRITE hex 54222 // page 21
+WRITE hex f0000 // page 60
+READ hex ded00 // page 55
+READ hex 19675 // page 6
+WRITE hex 34125 // page 13
+READ hex 24456 // page 9
+WRITE hex 28536 // page 10
+WRITE hex 38674 // page 14
+READ hex cca13 // page 51
+WRITE hex 94615 // page 37
+READ hex a1245 // page 40
+WRITE hex 84456 // page 33
+WRITE hex 80577 // page 32
+READ hex 98462 // page 38
+WRITE hex a9009 // page 42
+WRITE hex a7aaa // page 41
+READ hex 51415 // page 20
+WRITE hex 4536 // page 1
+READ hex 6a726 // page 26
+READ hex 6c633 // page 27
+WRITE hex 7d757 // page 31
+READ hex 8e451 // page 34
+READ hex 6e252 // page 27
+WRITE hex 47536 // page 17
+READ hex 42472 // page 16
+WRITE hex 3e455 // page 15
+WRITE hex 4b241 // page 18
+

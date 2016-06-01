@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE Shop [
+    <!ELEMENT Category (product+)>
+        <!ATTLIST Category prId ID #IMPLIED>
+    <!ELEMENT product (name, id+, price)>
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT id (#PCDATA)>
+        <!ELEMENT price (#PCDATA)>
+]>

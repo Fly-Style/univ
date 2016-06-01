@@ -1,0 +1,31 @@
+{
+    "figure2":
+    {
+        "rotation":[0.0,0.0,0.0],
+        "heightSegments":32,
+        "impulse":[-1.0,0.0,0.0],
+        "position":[7.0,0.0,0.0],
+        "radius":3.0,
+        "widthSegments":32,
+        "object":"sphere"
+    },
+    "figure0":
+    {
+        "rotation":[0.0,0.0,0.0],
+        "width":24.0,
+        "impulse":[0.0,0.0,0.0],
+        "position":[0.0,-3.0,0.0],
+        "object":"wall",
+        "height":8.0
+    },
+    "figure1":
+    {
+        "rotation":[0.0,0.1,0.2],
+        "heightSegments":32,
+        "impulse":[1.0,0.0,0.0],
+        "position":[-7.0,0.0,0.0],
+        "radius":3.0,
+        "widthSegments":32,
+        "object":"sphere"
+    }
+}

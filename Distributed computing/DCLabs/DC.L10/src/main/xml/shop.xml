@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Shop PUBLIC "template.dtd" " ">
+<Shop>
+    <Category id="1">
+        <product>
+            <name>Nyama</name>
+            <id>1</id>
+            <price>100</price>
+        </product>
+        <product>
+            <name>NyamaNyamaNyama</name>
+            <id>2</id>
+            <price>100</price>
+        </product>
+    </Category>
+
+    <Category id="2">
+        <product>
+            <name>Vanyama</name>
+            <id>4</id>
+            <price>120</price>
+        </product>
+        <product>
+            <name>NyamaVanyama</name>
+            <id>5</id>
+            <price>150</price>
+        </product>
+    </Category>
+</Shop>
