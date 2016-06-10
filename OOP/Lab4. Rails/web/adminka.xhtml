@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Admin Panel</title>
+</h:head>
+
+<h:body>
+    <h:outputStylesheet library="css" name="style.css"/>
+
+    <div class="admin-panel">
+
+    <h:commandButton class="btn" value="View All Users" action="#{rails_admin_panel.viewAllUsers}"/><br/>
+    <h:commandButton class="btn" value="View All Requests" action="#{rails_admin_panel.viewAllRequests}"/><br/>
+
+    </div>
+
+    <div class="admin-tables">
+        <h:dataTable value="#{rails_admin_panel.allRequests}" var="o">
+
+            <h:column>
+                #{o.id}
+            </h:column>
+
+            <h:column>
+                #{o.user.name}
+            </h:column>
+
+            <h:column>
+                #{o.user.surname}
+            </h:column>
+
+            <h:column>
+                #{o.day}
+            </h:column>
+
+            <h:column>
+                #{o.stationBegin.name}
+            </h:column>
+
+            <h:column>
+                #{o.stationEnd.name}
+            </h:column>
+
+            <h:column>
+                <h:commandButton value="Kick" action="#{rails_admin_panel.deleteRequest(o.id)}"/>
+            </h:column>
+
+        </h:dataTable>
+    </div>
+
+    <div class="admin-tables">
+        <h:dataTable value="#{rails_admin_panel.allUsers}" var="j">
+
+            <h:column>
+                #{j.id}
+            </h:column>
+
+            <h:column>
+                #{j.name}
+            </h:column>
+
+            <h:column>
+                #{j.surname}
+            </h:column>
+
+            <h:column>
+                <h:commandButton value="Ban" action="#{rails_admin_panel.deleteUser(j.id)}"/>
+            </h:column>
+
+        </h:dataTable>
+    </div>
+
+</h:body>
+
+</html>

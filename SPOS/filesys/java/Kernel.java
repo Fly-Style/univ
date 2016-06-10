@@ -3,11 +3,9 @@
  * 456789012345678901234567890123456789012345678901234567890123456789012
  */
 
-import java.util.StringTokenizer ;
-import java.util.Properties ;
-import java.io.FileInputStream ;
-import java.io.IOException ;
-import java.io.FileNotFoundException ;
+import java.io.*;
+import java.util.Properties;
+import java.util.StringTokenizer;
 
 /*
  * $Log: Kernel.java,v $
@@ -50,6 +48,8 @@ public class Kernel
    * Bad file number.
    */
   public static final int EBADF = 9 ;
+
+  public static short uid = 0;
 
   /**
    * Permission denied.
@@ -383,6 +383,67 @@ public class Kernel
     return 0 ;
   }
 
+
+  public static void chown(String fullPath, short owner, short group) throws Exception {
+
+    int status = 0 ;
+    Stat stat = new Stat() ;
+    status = stat( fullPath , stat ) ;
+
+    // a buffer for reading directory entries
+    DirectoryEntry directoryEntry = new DirectoryEntry() ;
+
+    // get the full path
+    String path = getFullPath( fullPath ) ;
+
+    // find the index node
+    IndexNode indexNode = new IndexNode() ;
+    short indexNodeNumber = findIndexNode( path , indexNode ) ;
+    if( indexNodeNumber < 0 ) {
+      process.errno = ENOENT ;
+    }
+
+    if(owner != 0) {
+      System.out.println("UID: "+indexNode.getUid());
+      indexNode.setUid(owner);
+      stat.st_dev = 0;
+      stat.st_ino = indexNodeNumber;
+      stat.copyIndexNode(indexNode);
+      System.out.println("UID Changed: " + indexNode.getUid());
+      Kernel.uid = indexNode.getUid();
+
+      FileWriter writer = new FileWriter("text.txt");
+      writer.write(String.valueOf(indexNode.getUid()));
+
+      Properties properties = new Properties() ;
+
+      FileInputStream in = new FileInputStream("filesys.conf") ;
+      properties.load( in ) ;
+      in.close();
+
+      properties.setProperty("process.uid", String.valueOf(indexNode.getUid()));
+      FileOutputStream stream = new FileOutputStream("filesys.conf");
+      properties.store(stream, "comment");
+    }
+  }
+
+  public static short umask (short umask) throws IOException {
+    ProcessContext processContext = new ProcessContext((short)2, (short)1, "/home/etc", (short)1011);
+    short ret = processContext.getUmask();
+    processContext.setUmask(umask);
+
+    Properties properties = new Properties() ;
+
+    FileInputStream in = new FileInputStream("filesys.conf") ;
+    properties.load( in ) ;
+    in.close();
+
+    properties.setProperty("process.umask", String.valueOf(umask));
+    FileOutputStream stream = new FileOutputStream("filesys.conf");
+    properties.store(stream, "comment");
+    return ret;
+  }
+
   /**
    * Creates a file or directory with the specified mode.  
    * <p>
@@ -407,6 +468,7 @@ public class Kernel
    * @exception java.lang.Exception if any underlying action causes
    * an exception to be thrown
    */
+
   public static int creat( String pathname , short mode )
     throws Exception
   {
@@ -1203,8 +1265,7 @@ to be done:
    * given in that file, including the filesystem.root.filename and
    * filesystem.root.mode ("r", "rw").
    */
-  public static void initialize()
-  {
+  public static void initialize() throws IOException {
     // check to see if the name of an alternate configuration
     // file has been specified.  This can be done, for example,
     //   java -Dfilesys.conf=myfile.txt program-name parameter ...
@@ -1235,18 +1296,21 @@ to be done:
     String rootFileSystemMode = 
       properties.getProperty( "filesystem.root.mode" , "rw" ) ;
 
+
     // get the current process properties
-    short uid = 1 ;
+    short uid = 0;
     try
     {
       uid = Short.parseShort( properties.getProperty( "process.uid" , "1" ) ) ;
     }
     catch ( NumberFormatException e )
     {
-      System.err.println( PROGRAM_NAME + 
+      System.err.println( PROGRAM_NAME +
         ": invalid number for property process.uid in configuration file" ) ;
       System.exit( EXIT_FAILURE ) ;
     }
+
+    Kernel.uid = uid;
 
     short gid = 1 ;
     try

@@ -35,6 +35,18 @@ public class ls
    * @exception java.lang.Exception if an exception is thrown
    * by an underlying operation
    */
+
+  private static String toBin (int a) {
+    StringBuilder ret = new StringBuilder();
+    int b;
+    while(a != 0) {
+      b = a % 2;
+      ret.append(b);
+      a /= 2;
+    }
+    return ret.reverse().toString();
+  }
+
   public static void main( String[] args ) throws Exception
   {
     // initialize the file system simulator kernel
@@ -142,7 +154,7 @@ public class ls
 
     // a temporary string
     String t = null ;
-
+    stat.setUid(Kernel.uid);
     // append the inode number in a field of 5
     t = Integer.toString( stat.getIno() ) ;
     for( int i = 0 ; i < 5 - t.length() ; i ++ )
@@ -159,6 +171,11 @@ public class ls
 
     // append the name
     s.append( name ) ;
+    s.append(" gid : " + stat.getGid() + ", uid : " + stat.getUid());
+    //System.out.println(stat.getMode());
+    String a = toBin((int) stat.getMode());
+    a = a.substring(a.length() - 10);
+    s.append(", mode : " + umask.parseOct(a));
 
     // print the buffer
     System.out.println( s.toString() ) ;

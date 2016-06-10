@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf/passthrough">>
+
+<h:head>
+    <title>User Panel</title>
+</h:head>
+
+<h:body>
+    <h:outputStylesheet library="css" name="style.css"/>
+
+    <h:outputLabel value="Hello, #{rails_user.currentUser.name}"/>
+
+    <div class="user-panel">
+
+        <h:form id="MakeRequestForm">
+            <h:inputText value="#{rails_main.date}" a:placeholder="Date :" >
+                <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:inputText><br/>
+            <h:inputText value="#{rails_main.begin}" a:placeholder="Trip Begin"/><br/>
+            <h:inputText value="#{rails_main.end}" a:placeholder="Trip End"/><br/>
+
+            <h:commandButton class="btn" value="Make Request" action="#{rails_main.makeRequest(rails_user.currentUser.id)}"/>
+        </h:form>
+
+
+        <h:commandButton class="btn" value="View All Trains" action="#{rails_main.showAllTrains}"/><br/>
+        <h:form id="View Trains by station">
+            <h:inputText value="#{rails_main.begin}" a:placeholder="Enter Begin"/><br/>
+            <h:inputText value="#{rails_main.end}" a:placeholder="Enter End"/><br/>
+            <h:commandButton class="btn" value="View Trains by station" action="#{rails_main.showTrains()}"/><br/>
+        </h:form>
+    </div>
+
+    <div class="user-table">
+        <h:dataTable value="#{rails_main.listOfTrains}" var="o">
+
+            <h:column>
+                #{o.id}
+            </h:column>
+
+            <h:column>
+                #{o.beginVoyage}
+            </h:column>
+
+            <h:column>
+                #{o.endVoyage}
+            </h:column>
+
+            <h:column>
+                #{o.hoursInVoyage}
+            </h:column>
+
+            <h:column>
+                #{o.places}
+            </h:column>
+
+        </h:dataTable>
+    </div>
+
+</h:body>
+
+</html>

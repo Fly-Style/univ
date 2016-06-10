@@ -1,0 +1,28 @@
+
+.admin-panel {
+    display: flex;
+    justify-content: center;
+}
+
+.admin-tables {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+/*#loginForm*/
+/*{*/
+    /*width: 300px;*/
+    /*height: 200px;*/
+    /*border-radius: 5px;*/
+    /*margin-left: 450px;*/
+    /*margin-top: 220px;*/
+    /*padding-top: 35px;*/
+/*}*/
+
+.btn
+{
+    border: solid #000;
+    background: mediumslateblue;
+    color: #fff;
+}
